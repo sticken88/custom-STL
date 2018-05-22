@@ -2,3 +2,5 @@ The purpose of this repository is to create a custom version of the containers o
 
 In this way I hope to refresh my knowledge of the library, improve my C++ knowledge and strenghten my coding skills other than refresh my algorithms and data structures knowledge.
 
+## Dependencies
+Doxygen is used to generate the documentation. Install it with `sudo apt-get install doxygen`.
