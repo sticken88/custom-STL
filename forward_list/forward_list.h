@@ -1,20 +1,26 @@
 #ifndef __FORWARD_LIST__
 #define __FORWARD_LIST__
 
-template <class T>
-class ForwardList
+namespace mst
 {
-public:
-   ForwardList();
-   ~ForwardList();
- private:
-   /* Define the stucture of each node */
-   struct list_node{
-     T value;
-     list_node *next;
-   };
+template <class T>
+   class ForwardList
+   {
+   public:
+      ForwardList(){
+         head = NULL;
+      }
 
-   list_node *head;
+      ~ForwardList(){}
+   private:
+      /* Define the stucture of each node */
+      struct list_node{
+      T value;
+      list_node *next;
+      };
+
+      list_node *head;
+   };
 };
 
 #endif
