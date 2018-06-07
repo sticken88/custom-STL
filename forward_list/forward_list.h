@@ -103,10 +103,11 @@ template <class T>
 
       void print(void)
       {
-         while(head != NULL)
+         list_node *tmp = head;
+         while(tmp != NULL)
          {
-            std::cout << head->value << std::endl;
-            head = head->next;
+            std::cout << tmp->value << std::endl;
+            tmp = tmp->next;
          }
       }
 
