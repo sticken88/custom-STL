@@ -1,20 +1,40 @@
 #ifndef __FORWARD_LIST__
 #define __FORWARD_LIST__
-
+//@file
 #include <iostream>
 
 namespace mst
 {
+  /**
+   * ForwardList. This class imitated the forward_list class in the STL that
+   * comews with the C++.
+   */
 template <class T>
    class ForwardList
    {
    public:
+      /**
+      * ForwardList constructor.
+      * Initializes the head of the list and helper variables.
+      */
       ForwardList(){
          head = NULL;
          size = 0;
       }
 
       ~ForwardList(){}
+
+      // TODO: what happens with an empty list?
+      // STL says undefined behavior. Here is seg fault
+      T& front(void)
+      {
+         return head->value;
+      }
+
+      bool empty(void)
+      {
+         return head == NULL;
+      }
 
       void push_front(T value)
       {
