@@ -57,6 +57,29 @@ template <class T>
          size--;
       }
 
+      void clear(void)
+      {
+         while(head != NULL)
+         {
+            list_node *tmp = head;
+            head = head->next;
+            delete tmp; // TODO: use the smart pointers?
+         }
+         size = 0;
+      }
+
+      // fill version of the STL method
+      void assign(int n, const T& val)
+      {
+         // first destroy the current content of the list
+         clear();
+         // then push the new values
+         while(n--)
+         {
+            push_front(val);
+         }
+      }
+
       void print(void)
       {
          while(head != NULL)
