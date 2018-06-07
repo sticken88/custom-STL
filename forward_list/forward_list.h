@@ -80,6 +80,27 @@ template <class T>
          }
       }
 
+      void reverse(void)
+      {
+         list_node *prev = NULL;
+         list_node *next = NULL;
+
+         while(head != NULL)
+         {
+            // save the next node
+            next = head->next;
+            // the new next is the previous!
+            head->next = prev;
+            // and move forward the pointers
+            prev = head;
+            head = next;
+         }
+
+         // on a not null list the new valid head is pointed by
+         // 'prev', so set the head to this pointer.
+         head = prev;
+      }
+
       void print(void)
       {
          while(head != NULL)
