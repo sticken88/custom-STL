@@ -27,37 +27,16 @@ template <class T>
          clear();
       }
 
-      // TODO: what happens with an empty list?
-      // STL says undefined behavior. Here is seg fault
-      T& front(void)
+      // fill version of the STL method
+      void assign(int n, const T& val)
       {
-         return head->value;
-      }
-
-      bool empty(void)
-      {
-         return head == NULL;
-      }
-
-      void push_front(T value)
-      {
-         // fist create the new node
-         list_node* new_node = create_node(value);
-         // add it to the list
-         new_node->next = head;
-         head = new_node;
-         size++;
-      }
-
-      void pop_front(void)
-      {
-         // copy the header
-         list_node* _tmp = head;
-         // update the head
-         head = head->next;
-         // delete the old head
-         delete _tmp;
-         size--;
+         // first destroy the current content of the list
+         clear();
+         // then push the new values
+         while(n--)
+         {
+            push_front(val);
+         }
       }
 
       void clear(void)
@@ -71,16 +50,47 @@ template <class T>
          size = 0;
       }
 
-      // fill version of the STL method
-      void assign(int n, const T& val)
+      bool empty(void)
       {
-         // first destroy the current content of the list
-         clear();
-         // then push the new values
-         while(n--)
+         return head == NULL;
+      }
+
+      // TODO: what happens with an empty list?
+      // STL says undefined behavior. Here is seg fault
+      T& front(void)
+      {
+         return head->value;
+      }
+
+      void pop_front(void)
+      {
+         // copy the header
+         list_node* _tmp = head;
+         // update the head
+         head = head->next;
+         // delete the old head
+         delete _tmp;
+         size--;
+      }
+
+      void print(void)
+      {
+         list_node *tmp = head;
+         while(tmp != NULL)
          {
-            push_front(val);
+            std::cout << tmp->value << std::endl;
+            tmp = tmp->next;
          }
+      }
+
+      void push_front(T value)
+      {
+         // fist create the new node
+         list_node* new_node = create_node(value);
+         // add it to the list
+         new_node->next = head;
+         head = new_node;
+         size++;
       }
 
       void reverse(void)
@@ -102,16 +112,6 @@ template <class T>
          // on a not null list the new valid head is pointed by
          // 'prev', so set the head to this pointer.
          head = prev;
-      }
-
-      void print(void)
-      {
-         list_node *tmp = head;
-         while(tmp != NULL)
-         {
-            std::cout << tmp->value << std::endl;
-            tmp = tmp->next;
-         }
       }
 
    private:
