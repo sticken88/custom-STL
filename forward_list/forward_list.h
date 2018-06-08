@@ -22,7 +22,10 @@ template <class T>
          size = 0;
       }
 
-      ~ForwardList(){}
+      ~ForwardList()
+      {
+         clear();
+      }
 
       // TODO: what happens with an empty list?
       // STL says undefined behavior. Here is seg fault
