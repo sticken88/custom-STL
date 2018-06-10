@@ -96,10 +96,13 @@ template <class T>
          size++;
       }
 
-      void resize(int n)
+      void resize(unsigned int n)
       {
-        if(n < size)
+        if(n == 0) clear();
+
+        if((n > 0) && (n < size))
         {
+           //shrink_list();
            list_node *ptr = head;
            // get to the last valid element
            while(--n) // the pre increment will do the trick
@@ -118,6 +121,34 @@ template <class T>
               tmp = NULL; // otherwise the memory remains dirty
               size--;
            }
+        }
+
+        // this case is a bitr trickier
+        if(n > size)
+        {
+           int elements = n-size;
+           // move to the last valid element
+           list_node *original_head = head;
+           // move to the last valid element
+           while(head->next != NULL) head = head->next;
+
+           // save the last valid pointer
+           list_node *last_valid = head;
+           // move the head to the next element where to insert new nodes
+           head = head->next;
+
+           // finally insert the new elements
+           for(int i=0; i<elements; i++)
+           {
+              T value;
+              push_front(value);
+           }
+
+           // link the original list with the newly created one
+           last_valid->next = head;
+
+           // finally restore the original head
+           head = original_head;
         }
       }
 
