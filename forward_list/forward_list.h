@@ -109,6 +109,18 @@ template <class T>
         }
       }
 
+      void resize(unsigned int n, const T& value)
+      {
+        if(n == 0) clear();
+
+        if((n > 0) && (n < size)) shrink_list(n);
+
+        if(n > size)
+        {
+           expand_list(n, value);
+        }
+      }
+
       void reverse(void)
       {
          list_node *prev = NULL;
@@ -174,7 +186,7 @@ template <class T>
          }
       }
 
-      void expand_list(unsigned int n, T value)
+      void expand_list(unsigned int n, const T& value)
       {
          int elements = n-size;
          // move to the last valid element
