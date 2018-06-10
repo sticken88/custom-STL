@@ -28,6 +28,7 @@ template <class T>
       }
 
       // fill version of the STL method
+      //void assign(int n, int val)
       void assign(int n, const T& val)
       {
          // first destroy the current content of the list
@@ -57,6 +58,7 @@ template <class T>
 
       // TODO: what happens with an empty list?
       // STL says undefined behavior. Here is seg fault
+      //int front(void)
       T& front(void)
       {
          return head->value;
@@ -83,6 +85,7 @@ template <class T>
          }
       }
 
+      //void push_front(int value)
       void push_front(T value)
       {
          // fist create the new node
@@ -91,6 +94,31 @@ template <class T>
          new_node->next = head;
          head = new_node;
          size++;
+      }
+
+      void resize(int n)
+      {
+        if(n < size)
+        {
+           list_node *ptr = head;
+           // get to the last valid element
+           while(--n) // the pre increment will do the trick
+           {
+              ptr = ptr->next;
+           }
+           // now ptr points to the last valid element
+           // necessary to proper adjust the pointers
+           list_node *next = ptr->next;
+           ptr->next = NULL;
+           while(next != NULL)
+           {
+              list_node *tmp = next;
+              next = next->next;
+              delete tmp;
+              tmp = NULL; // otherwise the memory remains dirty
+              size--;
+           }
+        }
       }
 
       void reverse(void)
@@ -117,6 +145,7 @@ template <class T>
    private:
       /* Define the stucture of each node */
       struct list_node{
+      //int value;
       T value;
       list_node *next;
       };
@@ -125,6 +154,7 @@ template <class T>
       int size;
 
       /* Used to create a new node */
+      //list_node* create_node(int value)
       list_node* create_node(T& value)
       {
          list_node* node = new list_node;
