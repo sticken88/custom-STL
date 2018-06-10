@@ -100,55 +100,12 @@ template <class T>
       {
         if(n == 0) clear();
 
-        if((n > 0) && (n < size))
-        {
-           //shrink_list();
-           list_node *ptr = head;
-           // get to the last valid element
-           while(--n) // the pre increment will do the trick
-           {
-              ptr = ptr->next;
-           }
-           // now ptr points to the last valid element
-           // necessary to proper adjust the pointers
-           list_node *next = ptr->next;
-           ptr->next = NULL;
-           while(next != NULL)
-           {
-              list_node *tmp = next;
-              next = next->next;
-              delete tmp;
-              tmp = NULL; // otherwise the memory remains dirty
-              size--;
-           }
-        }
+        if((n > 0) && (n < size)) shrink_list(n);
 
-        // this case is a bitr trickier
         if(n > size)
         {
-           int elements = n-size;
-           // move to the last valid element
-           list_node *original_head = head;
-           // move to the last valid element
-           while(head->next != NULL) head = head->next;
-
-           // save the last valid pointer
-           list_node *last_valid = head;
-           // move the head to the next element where to insert new nodes
-           head = head->next;
-
-           // finally insert the new elements
-           for(int i=0; i<elements; i++)
-           {
-              T value;
-              push_front(value);
-           }
-
-           // link the original list with the newly created one
-           last_valid->next = head;
-
-           // finally restore the original head
-           head = original_head;
+           T value;
+           expand_list(n, value);
         }
       }
 
@@ -193,6 +150,53 @@ template <class T>
          node->next = NULL;
 
          return node;
+      }
+
+      void shrink_list(unsigned int n)
+      {
+         list_node *ptr = head;
+         // get to the last valid element
+         while(--n) // the pre increment will do the trick
+         {
+            ptr = ptr->next;
+         }
+         // now ptr points to the last valid element
+         // necessary to proper adjust the pointers
+         list_node *next = ptr->next;
+         ptr->next = NULL;
+         while(next != NULL)
+         {
+            list_node *tmp = next;
+            next = next->next;
+            delete tmp;
+            tmp = NULL; // otherwise the memory remains dirty
+            size--;
+         }
+      }
+
+      void expand_list(unsigned int n, T value)
+      {
+         int elements = n-size;
+         // move to the last valid element
+         list_node *original_head = head;
+         // move to the last valid element
+         while(head->next != NULL) head = head->next;
+
+         // save the last valid pointer
+         list_node *last_valid = head;
+         // move the head to the next element where to insert new nodes
+         head = head->next;
+
+         // finally insert the new elements
+         for(int i=0; i<elements; i++)
+         {
+            push_front(value);
+         }
+
+         // link the original list with the newly created one
+         last_valid->next = head;
+         // finally restore the original head
+         head = original_head;
       }
    };
 };
