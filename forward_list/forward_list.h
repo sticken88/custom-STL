@@ -96,6 +96,40 @@ template <class T>
          size++;
       }
 
+      void remove(const T& value)
+      {
+         list_node *ptr = head;
+         list_node *prev = NULL;
+
+         while(ptr != NULL)
+         {
+            // delete
+            if(ptr->value == value)
+            {
+               // the very first element of the list
+               if(ptr == head)
+               {
+                  // move the head before removing the first one
+                  head = head->next;
+                  delete ptr;
+                  ptr = head;
+               }
+               else
+               {
+                  prev->next = ptr->next;
+                  delete ptr;
+                  ptr = prev->next;
+               }
+            }
+            else
+            { // move the pointers
+               prev = ptr;
+               ptr = ptr->next;
+            }
+         }
+      }
+
+      // TODO: check the case with empty list and call resize w. size > 0
       void resize(unsigned int n)
       {
         if(n == 0) clear();
