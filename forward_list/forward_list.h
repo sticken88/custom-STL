@@ -2,6 +2,7 @@
 #define __FORWARD_LIST__
 //@file
 #include <iostream>
+#include <unordered_map>
 
 namespace mst
 {
@@ -113,12 +114,14 @@ template <class T>
                   head = head->next;
                   delete ptr;
                   ptr = head;
+                  size--;
                }
                else
                {
                   prev->next = ptr->next;
                   delete ptr;
                   ptr = prev->next;
+                  size--;
                }
             }
             else
@@ -174,6 +177,44 @@ template <class T>
          // on a not null list the new valid head is pointed by
          // 'prev', so set the head to this pointer.
          head = prev;
+      }
+
+      void unique(void)
+      {
+         if(head != NULL)
+         {
+            // using an hash table to quickly lookup for duplicates
+            // this speeds up from O(n^2) to O(n)
+            std::unordered_map<T, int> hash_table;
+
+            // the head is necessarily unique so far
+            hash_table[head->value];
+
+            // initialization
+            list_node *prev = head;
+            list_node *ptr = head->next;
+
+            while(ptr != NULL)
+            {
+               // the element is not present
+               if(hash_table[ptr->value] != 1)
+               {
+                  // ret is a reference
+                  //ret = 1;
+                  hash_table[ptr->value] = 1;
+                  ptr = ptr->next;
+                  std::cout << "NUOVO - " << hash_table[ptr->value] << std::endl;
+               }
+               else
+               {
+                  prev->next = ptr->next;
+                  delete ptr;
+                  ptr = prev->next;
+                  size--;
+                  std::cout << "RIMOSSO DUPLICATO" << std::endl;
+               }
+            }
+         }
       }
 
    private:
