@@ -188,7 +188,7 @@ template <class T>
             std::unordered_map<T, int> hash_table;
 
             // the head is necessarily unique so far
-            hash_table[head->value];
+            hash_table[head->value] = 1;
 
             // initialization
             list_node *prev = head;
@@ -199,11 +199,9 @@ template <class T>
                // the element is not present
                if(hash_table[ptr->value] != 1)
                {
-                  // ret is a reference
-                  //ret = 1;
                   hash_table[ptr->value] = 1;
+                  prev = ptr;
                   ptr = ptr->next;
-                  std::cout << "NUOVO - " << hash_table[ptr->value] << std::endl;
                }
                else
                {
@@ -211,7 +209,6 @@ template <class T>
                   delete ptr;
                   ptr = prev->next;
                   size--;
-                  std::cout << "RIMOSSO DUPLICATO" << std::endl;
                }
             }
          }
